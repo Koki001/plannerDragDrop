@@ -422,6 +422,9 @@ ul li {
   position: relative;
   max-height: 280px;
 }
+.dailyPlannerMain .dailyContainer .listContainertoDo ul {
+  max-height: 630px;
+}
 .dailyPlannerMain .dailyContainer .listContainertopPriorities {
   grid-area: listContainertopPriorities;
 }

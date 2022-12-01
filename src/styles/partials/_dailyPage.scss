@@ -49,6 +49,11 @@
         max-height: 280px;
       }
     }
+    .listContainertoDo {
+      ul {
+        max-height: 630px;
+      }
+    }
     .listContainertopPriorities {
       grid-area: listContainertopPriorities;
       // border: 3px solid $accentColor;
