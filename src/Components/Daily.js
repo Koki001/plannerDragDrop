@@ -148,7 +148,7 @@ const Daily = function () {
   const [itemSize, setItemSize] = useState("");
   const handleDragged = function (e) {
     setItemSize(e.target.dataset.rbdDraggableId);
-    // console.log("click", e.target.dataset.rbdDraggableId);
+    console.log(e.target);
     return false;
   };
   const handleDropped = function () {
@@ -223,7 +223,9 @@ const Daily = function () {
                                       //   snapshot.isDragging ? "411.33px" : "100%",
                                     }}
                                   >
-                                    <p>{item.content}</p>
+                                    <p onMouseDown={handleDragged}>
+                                      {item.content}
+                                    </p>
                                     <div className="options">
                                       <IconButton
                                         aria-label="edit"

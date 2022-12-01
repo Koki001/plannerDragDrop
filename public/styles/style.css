@@ -452,6 +452,7 @@ ul li {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 80%;
+  pointer-events: none;
 }
 .dailyPlannerMain .dailyContainer li:active,
 .dailyPlannerMain .dailyContainer li:focus {
