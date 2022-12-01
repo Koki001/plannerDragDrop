@@ -42,10 +42,11 @@
       background-color: $noteBackground;
       overflow: hidden;
       ul {
-        overflow: scroll;
+        overflow-y: scroll;
         background-color: $noteBackground;
         position: relative;
         // z-index: 10;
+        max-height: 280px;
       }
     }
     .listContainertopPriorities {

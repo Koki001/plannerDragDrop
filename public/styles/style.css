@@ -417,9 +417,10 @@ ul li {
   overflow: hidden;
 }
 .dailyPlannerMain .dailyContainer .listContainers ul {
-  overflow: scroll;
+  overflow-y: scroll;
   background-color: #FFF8EE;
   position: relative;
+  max-height: 280px;
 }
 .dailyPlannerMain .dailyContainer .listContainertopPriorities {
   grid-area: listContainertopPriorities;
