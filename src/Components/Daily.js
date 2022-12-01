@@ -3,10 +3,48 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
 import * as dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 
 const Daily = function () {
+  const theme = createTheme({
+    components: {
+      MuiButtonBase: {
+        defaultProps: {
+          disableRipple: true,
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            padding: "0",
+            color: "#6F204D",
+            border: "2px solid #6F204D",
+            fontSize: "0.9rem",
+          },
+        },
+      },
+    },
+
+    palette: {
+      primary: {
+        main: "#6F204D",
+        contrastText: "#ff0000",
+      },
+    },
+    typography: {
+      fontFamily: "Righteous",
+    },
+  });
   const itemsFirebase = [
-    { id: uuid(), content: "first top priorities" },
+    {
+      id: uuid(),
+      content:
+        "first top prioritiesfirst top prioritiesfirst top prioritiesfirst top prioritiesfirst top prioritiesfirst top prioritiesfirst top priorities",
+    },
     { id: uuid(), content: "second top priorities" },
     { id: uuid(), content: "third top priorities" },
     { id: uuid(), content: "fourth top priorities" },
@@ -107,21 +145,23 @@ const Daily = function () {
     }
   };
   const [listItems, setListItems] = useState(listItemsTest);
-  const [itemSize, setItemSize] = useState("100%");
-  const handleDragged = function () {
-    setItemSize("411.33px");
-    console.log("click", itemSize);
+  const [itemSize, setItemSize] = useState("");
+  const handleDragged = function (e) {
+    setItemSize(e.target.dataset.rbdDraggableId);
+    // console.log("click", e.target.dataset.rbdDraggableId);
     return false;
   };
   const handleDropped = function () {
-    setItemSize("100%");
+    setItemSize("");
     console.log("unclick", itemSize);
   };
   return (
     <div className="dailyPlannerMain" onMouseUp={handleDropped}>
       <nav className="wrapperSlim">
         <Link to={"/planner"}>
-          <button>back</button>
+          <ThemeProvider theme={theme}>
+            <Button>back</Button>
+          </ThemeProvider>
         </Link>
         <h2>Daily Planner</h2>
         <p className="navDate">date: {dayjs().format("dddd/MM/YYYY")}</p>
@@ -156,16 +196,24 @@ const Daily = function () {
                               index={index}
                             >
                               {(provided, snapshot) => {
-                                // console.log(snapshot)
+                                // console.log(provided.draggableProps)
+
                                 return (
                                   <li
                                     // onDrag={handleDragged}
+
                                     onMouseDown={handleDragged}
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{
-                                      width: itemSize,
+                                      width:
+                                        itemSize ===
+                                        provided.draggableProps[
+                                          "data-rbd-draggable-id"
+                                        ]
+                                          ? "411.33px"
+                                          : "100%",
                                       userSelect: "none",
                                       backgroundColor: snapshot.isDragging
                                         ? "#E3E3E3"
@@ -175,7 +223,21 @@ const Daily = function () {
                                       //   snapshot.isDragging ? "411.33px" : "100%",
                                     }}
                                   >
-                                    {item.content}
+                                    <p>{item.content}</p>
+                                    <div className="options">
+                                      <IconButton
+                                        aria-label="edit"
+                                        size="small"
+                                      >
+                                        <EditIcon fontSize="inherit" />
+                                      </IconButton>
+                                      <IconButton
+                                        aria-label="delete"
+                                        size="small"
+                                      >
+                                        <DeleteIcon fontSize="inherit" />
+                                      </IconButton>
+                                    </div>
                                   </li>
                                 );
                               }}

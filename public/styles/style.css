@@ -443,8 +443,15 @@ ul li {
   height: 35px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   padding: 0 10px;
+}
+.dailyPlannerMain .dailyContainer li p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
 }
 .dailyPlannerMain .dailyContainer li:active,
 .dailyPlannerMain .dailyContainer li:focus {
