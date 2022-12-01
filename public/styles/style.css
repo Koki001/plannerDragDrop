@@ -445,7 +445,10 @@ ul li {
   align-items: center;
   width: 100%;
   padding: 0 10px;
-  width: 90%;
+}
+.dailyPlannerMain .dailyContainer li:active,
+.dailyPlannerMain .dailyContainer li:focus {
+  width: "411.33px";
 }
 .dailyPlannerMain .dailyContainer h3 {
   text-align: center;

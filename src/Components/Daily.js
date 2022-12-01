@@ -107,9 +107,18 @@ const Daily = function () {
     }
   };
   const [listItems, setListItems] = useState(listItemsTest);
-  // const now = dayjs()
+  const [itemSize, setItemSize] = useState("100%");
+  const handleDragged = function () {
+    setItemSize("411.33px");
+    console.log("click", itemSize);
+    return false;
+  };
+  const handleDropped = function () {
+    setItemSize("100%");
+    console.log("unclick", itemSize);
+  };
   return (
-    <div className="dailyPlannerMain">
+    <div className="dailyPlannerMain" onMouseUp={handleDropped}>
       <nav className="wrapperSlim">
         <Link to={"/planner"}>
           <button>back</button>
@@ -147,17 +156,23 @@ const Daily = function () {
                               index={index}
                             >
                               {(provided, snapshot) => {
+                                // console.log(snapshot)
                                 return (
                                   <li
+                                    // onDrag={handleDragged}
+                                    onMouseDown={handleDragged}
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{
+                                      width: itemSize,
                                       userSelect: "none",
                                       backgroundColor: snapshot.isDragging
                                         ? "#E3E3E3"
                                         : "#FFF8EE",
                                       ...provided.draggableProps.style,
+                                      // width:
+                                      //   snapshot.isDragging ? "411.33px" : "100%",
                                     }}
                                   >
                                     {item.content}
