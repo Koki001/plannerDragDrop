@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import WelcomePage from "./Components/WelcomePage";
+import SignUp from "./Components/SignUp";
+import Planner from "./Components/Planner";
+import Daily from "./Components/Daily";
+import Weekly from "./Components/Weekly";
+// other imports
+import { Routes, Route} from "react-router-dom";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App wrapper">
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/planner" element={<Planner />} />
+        <Route path="/daily" element={<Daily />} />
+        <Route path="/weekly" element={<Weekly />} />
+      </Routes>
     </div>
   );
 }

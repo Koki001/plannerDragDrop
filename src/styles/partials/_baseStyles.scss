@@ -1,0 +1,45 @@
+@use "./variables" as *;
+
+html {
+  background-color: $backgroundColor;
+  font-size: 125%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root,
+body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#root {
+  padding: 20px 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: $noteBackground;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+  }
+}
