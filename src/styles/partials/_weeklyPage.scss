@@ -14,4 +14,13 @@
       width: 100px;
     }
   }
+  .dragTest {
+    border: 1px solid red;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    cursor: pointer;
+    background-color: gray;
+  }
 }

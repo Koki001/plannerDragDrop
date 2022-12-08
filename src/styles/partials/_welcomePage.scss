@@ -55,7 +55,13 @@
     margin-top: 50px;
   }
 }
-#email-input,
-#password-input {
-  border: 2px solid $accentColor;
+.signUpMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 60%;
+  max-width: 400px;
+  min-width: 300px;
 }
+

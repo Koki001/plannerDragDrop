@@ -8,7 +8,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-
+import { getDatabase, ref, set, update } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
 const Daily = function () {
   const theme = createTheme({
     components: {
@@ -39,6 +41,22 @@ const Daily = function () {
       fontFamily: "Righteous",
     },
   });
+  const auth = getAuth();
+  const database = getDatabase();
+  console.log(auth.currentUser.uid);
+  const handleFirebaseTest = function () {
+    set(ref(database, `${auth.currentUser.uid}/daily`), {
+      data: [
+        { id: uuid(), content: "TESSST1" },
+      ],
+    });
+  };
+    const handleFirebaseUpdateTest = function () {
+      update(ref(database, `${auth.currentUser.uid}/daily`), {
+        data: [{ id: uuid(), content: "UPDATEEEE" }],
+      });
+    };
+
   const itemsFirebase = [
     {
       id: uuid(),
@@ -228,12 +246,14 @@ const Daily = function () {
                                     </p>
                                     <div className="options">
                                       <IconButton
+                                        onClick={handleFirebaseTest}
                                         aria-label="edit"
                                         size="small"
                                       >
                                         <EditIcon fontSize="inherit" />
                                       </IconButton>
                                       <IconButton
+                                        onClick={handleFirebaseUpdateTest}
                                         aria-label="delete"
                                         size="small"
                                       >
