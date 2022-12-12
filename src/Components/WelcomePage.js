@@ -5,7 +5,15 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useDispatch, useSelector } from "react-redux";
 import { InputAdornment } from "@mui/material";
+import {
+  USER_LOGGED_IN,
+  USER_NAME,
+  USER_ID,
+  USER_EMAIL,
+  USER_SIGN_OUT,
+} from "../slices/userSlice";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -30,6 +38,7 @@ const WelcomePage = function () {
   const [passVisible, setPassVisible] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const auth = getAuth();
   const location = useLocation();
 
@@ -40,12 +49,16 @@ const WelcomePage = function () {
   }, []);
   const login = async function () {
     try {
-      const user = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         auth,
         logInEmail,
         logInPassword
       ).then(function (userCredential) {
         console.log(userCredential);
+        dispatch(USER_LOGGED_IN(true))
+        dispatch(USER_ID(userCredential.user.uid))
+        dispatch(USER_NAME(userCredential.user.displayName))
+        dispatch(USER_EMAIL(userCredential.user.email))
         navigate("/planner");
       });
     } catch (error) {

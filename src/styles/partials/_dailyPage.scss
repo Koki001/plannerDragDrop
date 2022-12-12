@@ -1,6 +1,7 @@
 @use "./variables" as *;
 
 .dailyPlannerMain {
+  position: relative;
   width: 100%;
   padding: 10px;
   nav {
@@ -26,14 +27,75 @@
       width: 100px;
     }
   }
+  .showAddMenufalse {
+    display: none;
+  }
+  .showAddMenutrue {
+    display: block;
+    animation: fadeIn 0.3s linear 1;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+  .radioCategories {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    label {
+      cursor: pointer;
+      border: 2px solid $accentColor;
+      border-radius: 10px;
+      padding: 10px;
+      &:hover {
+        border: 2px solid $noteHeading;
+      }
+    }
+    input:checked + label {
+      border: 2px solid $noteHeading;
+      background-color: $noteHeading;
+    }
+  }
+  .choreButtons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .addChore {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 500px;
+    background-color: $backgroundColor;
+    z-index: 100;
+    h2,
+    label {
+      text-transform: uppercase;
+    }
+    button {
+      padding: 5px 20px;
+    }
+  }
   .dailyContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 10px 10px;
     grid-template-areas:
-      "listContainertopPriorities listContainerreminders listContainertoDo"
-      "listContainernotes listContainernotes listContainertoDo";
+      "listContainerTopPriorities listContainerReminders listContainerToDo"
+      "listContainerNotes listContainerNotes listContainerToDo";
     width: 100%;
     height: 700px;
     .listContainers {
@@ -58,16 +120,16 @@
       grid-area: listContainertopPriorities;
       // border: 3px solid $accentColor;
     }
-    .listContainerreminders {
-      grid-area: listContainerreminders;
+    .listContainerReminders {
+      grid-area: listContainerReminders;
       // border: 3px solid $accentColor;
     }
-    .listContainertoDo {
-      grid-area: listContainertoDo;
+    .listContainerToDo {
+      grid-area: listContainerToDo;
       // border: 3px solid $accentColor;
     }
-    .listContainernotes {
-      grid-area: listContainernotes;
+    .listContainerNotes {
+      grid-area: listContainerNotes;
       // border: 3px solid $accentColor;
     }
     li {
@@ -104,5 +166,14 @@
       text-transform: uppercase;
       font-size: 1rem;
     }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

@@ -2,6 +2,7 @@ import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
 
 const Planner = function () {
   // Material UI Theme
@@ -37,6 +38,10 @@ const Planner = function () {
       fontFamily: "Righteous",
     },
   });
+    const userInfo = useSelector(function (state) {
+      return state;
+    });
+    console.log(userInfo)
   return (
     <div className="plannerCategories">
       <ul>
