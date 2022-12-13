@@ -134,7 +134,7 @@ const WelcomePage = function () {
               }}
             />
 
-            <Button onClick={handleLogin} variant="contained">
+            <Button style={{width: "100%", marginTop: "10px"}} onClick={handleLogin} variant="contained">
               Log In
             </Button>
           </ThemeProvider>

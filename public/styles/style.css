@@ -332,6 +332,7 @@ ul li {
   align-items: center;
   height: 100%;
   width: 100%;
+  padding: 50px 20px;
 }
 
 .loginMain {
@@ -429,6 +430,8 @@ ul li {
   justify-content: space-between;
 }
 .dailyPlannerMain .radioCategories label {
+  display: inline-block;
+  transition: all 0.2s linear;
   cursor: pointer;
   border: 2px solid #6F204D;
   border-radius: 10px;
@@ -436,6 +439,7 @@ ul li {
 }
 .dailyPlannerMain .radioCategories label:hover {
   border: 2px solid #FFB84C;
+  transform: scale(1.1);
 }
 .dailyPlannerMain .radioCategories input:checked + label {
   border: 2px solid #FFB84C;
@@ -448,6 +452,8 @@ ul li {
 }
 .dailyPlannerMain .addChore {
   padding: 20px;
+  border-radius: 20px;
+  border: 3px solid #6F204D;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -512,6 +518,7 @@ ul li {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  cursor: move;
   padding: 0 10px;
 }
 .dailyPlannerMain .dailyContainer li p {

@@ -30,8 +30,9 @@ import {
   USER_SIGN_OUT,
 } from "../slices/userSlice";
 import { getAuth } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { current } from "@reduxjs/toolkit";
 const theme = createTheme({
   components: {
     MuiButtonBase: {
@@ -159,8 +160,20 @@ const Daily = function () {
         setAddMenu(false);
         setAddToPlanner(!addToPlanner);
       });
-    } else {
-      console.log("not filled");
+    } else if (category === "") {
+      Swal.fire({
+        text: "Please select a category for your task",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
+    } else if (newText === "") {
+      Swal.fire({
+        text: "Please add a description",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
     }
   };
   const handleCancelText = function () {
@@ -176,8 +189,8 @@ const Daily = function () {
       title: "Remove task from list?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, remove it",
       cancelButtonText: "No, don't remove it",
     }).then((result) => {
@@ -191,12 +204,26 @@ const Daily = function () {
       }
     });
   };
+
   const handleFormChange = function (e) {
     setCategory(e.target.value);
   };
+
+  const onDrag = function (e, index) {
+    console.log("start", e.target, index);
+  };
+  const onDragEnter = function (e, index) {
+    console.log("drag enter", e.target, index);
+  };
+  const handleSort = function () {
+
+  };
   return (
     <div className="dailyPlannerMain">
-      <div className={`showAddMenu${addMenu}`}>
+      <div
+        onClick={() => setAddMenu(false)}
+        className={`showAddMenu${addMenu}`}
+      >
         <div onClick={(event) => event.stopPropagation()} className="addChore">
           <h2>select category</h2>
           <form className="radioCategories" onChange={handleFormChange}>
@@ -260,8 +287,20 @@ const Daily = function () {
               value={newText}
             />
             <div className="choreButtons">
-              <Button onClick={handleCancelText}>cancel</Button>
-              <Button onClick={handleAddText}>add</Button>
+              <Button
+                style={{ color: "white" }}
+                variant="contained"
+                onClick={handleCancelText}
+              >
+                cancel
+              </Button>
+              <Button
+                style={{ color: "white" }}
+                variant="contained"
+                onClick={handleAddText}
+              >
+                add
+              </Button>
             </div>
           </ThemeProvider>
         </div>
@@ -273,7 +312,7 @@ const Daily = function () {
           </ThemeProvider>
         </Link>
         <ThemeProvider theme={theme}>
-          <Button onClick={handleDatabaseAdd}>+</Button>
+          <Button onClick={handleDatabaseAdd}>ADD TASK</Button>
         </ThemeProvider>
         <h2>Daily Planner</h2>
         <p className="navDate">date: {dayjs().format("dddd/MM/YYYY")}</p>
@@ -284,7 +323,15 @@ const Daily = function () {
           <ul>
             {firebaseData.priorities?.map(function (item, index) {
               return (
-                <li key={item.id} id={item.key}>
+                <li
+                  draggable
+                  onDrag={onDrag}
+                  onDragEnter={onDragEnter}
+                  onDragEnd={handleSort}
+                  onDragOver={(e) => e.preventDefault()}
+                  key={item.id}
+                  id={item.key}
+                >
                   <p>{item.description}</p>
                   <div className="options">
                     <IconButton
@@ -322,7 +369,15 @@ const Daily = function () {
           <ul>
             {firebaseData.reminders?.map(function (item, index) {
               return (
-                <li key={item.id} id={item.key}>
+                <li
+                  draggable
+                  onDrag={onDrag}
+                  onDragEnter={onDragEnter}
+                  onDragEnd={handleSort}
+                  onDragOver={(e) => e.preventDefault()}
+                  key={item.id}
+                  id={item.key}
+                >
                   <p>{item.description}</p>
                   <div className="options">
                     <IconButton
@@ -360,7 +415,15 @@ const Daily = function () {
           <ul>
             {firebaseData.toDo?.map(function (item, index) {
               return (
-                <li key={item.id} id={item.key}>
+                <li
+                  draggable
+                  onDrag={onDrag}
+                  onDragEnter={onDragEnter}
+                  onDragEnd={handleSort}
+                  onDragOver={(e) => e.preventDefault()}
+                  key={item.id}
+                  id={item.key}
+                >
                   <p>{item.description}</p>
                   <div className="options">
                     <IconButton
@@ -398,7 +461,15 @@ const Daily = function () {
           <ul>
             {firebaseData.notes?.map(function (item, index) {
               return (
-                <li key={item.id} id={item.key}>
+                <li
+                  draggable
+                  onDrag={onDrag}
+                  onDragEnter={onDragEnter}
+                  onDragEnd={handleSort}
+                  onDragOver={(e) => e.preventDefault()}
+                  key={item.id}
+                  id={item.key}
+                >
                   <p>{item.description}</p>
                   <div className="options">
                     <IconButton
