@@ -66,6 +66,12 @@ const theme = createTheme({
 const Daily = function () {
   const [firebaseData, setFirebaseData] = useState([]);
   const [firebaseLoaded, setFirebaseLoaded] = useState(false);
+  const [categoryMax, setCategoryMax] = useState({
+    priorities: 8,
+    reminders: 8,
+    toDo: 18,
+    notes: 8,
+  });
   const [addToPlanner, setAddToPlanner] = useState("");
   const [newText, setNewText] = useState("");
   const [category, setCategory] = useState("");
@@ -147,6 +153,7 @@ const Daily = function () {
     },
     [addToPlanner, auth]
   );
+
   useEffect(
     function () {
       setRender(!render);
@@ -163,19 +170,57 @@ const Daily = function () {
     setNewText(e.target.value);
   };
   const handleAddText = function () {
+    console.log(category);
     if (newText !== "" && category !== "") {
-      push(ref(database, auth.currentUser.uid + "/daily" + `/${category}`), {
-        description: newText,
-        created: dayjs().format("dddd/MM/YYYY"),
-        completed: false,
-        id: uuid(),
-        parent: category,
-      }).then(function () {
-        setNewText("");
-        setCategory("");
-        setAddMenu(false);
-        setAddToPlanner(!addToPlanner);
-      });
+      if (firebaseData[category]) {
+        if (firebaseData[category].length < categoryMax[category]) {
+          push(
+            ref(database, auth.currentUser.uid + "/daily" + `/${category}`),
+            {
+              description: newText,
+              created: dayjs().format("dddd/MM/YYYY"),
+              completed: false,
+              id: uuid(),
+              parent: category,
+            }
+          ).then(function () {
+            setNewText("");
+            setCategory("");
+            setAddMenu(false);
+            setAddToPlanner(!addToPlanner);
+          });
+        } else if (firebaseData[category].length >= categoryMax[category]) {
+          Swal.fire({
+            reverseButtons: true,
+            background: "#B38FFB",
+            confirmButtonColor: "#6F204D",
+            color: "#6F204D",
+            text: "Maximum number of tasks reached. Please remove some items before adding new ones.",
+            showCancelButton: false,
+            confirmButtonText: "Ok",
+          }).then(function (res) {
+            if (res.isConfirmed) {
+              setNewText("");
+              setCategory("");
+              setAddMenu(false);
+              setAddToPlanner(!addToPlanner);
+            }
+          });
+        }
+      } else {
+        push(ref(database, auth.currentUser.uid + "/daily" + `/${category}`), {
+          description: newText,
+          created: dayjs().format("dddd/MM/YYYY"),
+          completed: false,
+          id: uuid(),
+          parent: category,
+        }).then(function () {
+          setNewText("");
+          setCategory("");
+          setAddMenu(false);
+          setAddToPlanner(!addToPlanner);
+        });
+      }
     } else if (category === "") {
       Swal.fire({
         background: "#B38FFB",
@@ -204,10 +249,11 @@ const Daily = function () {
   const handleEdit = function (e) {
     // console.log(e.target);
     Swal.fire({
+      reverseButtons: true,
       input: "text",
       inputValue: e.target.parentElement.parentElement.textContent,
       // inputPlaceholder: e.target.parentElement.parentElement.textContent,
-      background: "#B38FFB",
+      background: "#FFF8EE",
       confirmButtonColor: "#6F204D",
       color: "#6F204D",
       title: "Task Editor",
@@ -237,6 +283,7 @@ const Daily = function () {
   const handleDelete = function (e) {
     // console.log(e.target.id);
     Swal.fire({
+      reverseButtons: true,
       background: "#B38FFB",
       confirmButtonColor: "#6F204D",
       color: "#6F204D",
@@ -264,6 +311,7 @@ const Daily = function () {
 
   const handleFormChange = function (e) {
     setCategory(e.target.value);
+    console.log(e.target.value);
   };
   const handleEnterKeyPress = function (e) {
     if (e.code === "Enter") {
@@ -290,7 +338,7 @@ const Daily = function () {
             onClick={(event) => event.stopPropagation()}
             className="addChore"
           >
-            <h2>select category</h2>
+            <h2>add to daily planner</h2>
             <form className="radioCategories" onChange={handleFormChange}>
               <div>
                 <input
@@ -407,7 +455,7 @@ const Daily = function () {
                         aria-label="edit"
                         size="small"
                         id={`${item.id}`}
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <EditIcon
                           style={{ pointerEvents: "none" }}
@@ -420,7 +468,7 @@ const Daily = function () {
                         onClick={handleDelete}
                         aria-label="delete"
                         size="small"
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <DeleteIcon
                           style={{ pointerEvents: "none" }}
@@ -455,7 +503,7 @@ const Daily = function () {
                         onClick={handleEdit}
                         aria-label="edit"
                         size="small"
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <EditIcon
                           style={{ pointerEvents: "none" }}
@@ -468,7 +516,7 @@ const Daily = function () {
                         onClick={handleDelete}
                         aria-label="delete"
                         size="small"
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <DeleteIcon
                           style={{ pointerEvents: "none" }}
@@ -503,7 +551,7 @@ const Daily = function () {
                         onClick={handleEdit}
                         aria-label="edit"
                         size="small"
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <EditIcon
                           style={{ pointerEvents: "none" }}
@@ -516,7 +564,7 @@ const Daily = function () {
                         onClick={handleDelete}
                         aria-label="delete"
                         size="small"
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <DeleteIcon
                           style={{ pointerEvents: "none" }}
@@ -551,7 +599,7 @@ const Daily = function () {
                         onClick={handleEdit}
                         aria-label="edit"
                         size="small"
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <EditIcon
                           style={{ pointerEvents: "none" }}
@@ -564,7 +612,7 @@ const Daily = function () {
                         onClick={handleDelete}
                         aria-label="delete"
                         size="small"
-                        sx={{ color: "#6F204D" }}
+                        sx={{ color: "#6F204D", padding: "0" }}
                       >
                         <DeleteIcon
                           style={{ pointerEvents: "none" }}

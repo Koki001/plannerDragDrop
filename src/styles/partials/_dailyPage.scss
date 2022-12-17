@@ -113,13 +113,13 @@
       background-color: $noteBackground;
       overflow: hidden;
       ul {
-        overflow-y: scroll;
+        overflow-y: hidden;
         background-color: $noteBackground;
         background-image: linear-gradient(#eee 0.1em, transparent 0.1em);
         background-size: 100% 35px;
         position: relative;
         // z-index: 10;
-        height: 100%;
+        height: calc(100% - 60px);
         // max-height: 280px;
       }
     }
@@ -143,8 +143,20 @@
     .listContainerNotes {
       grid-area: listContainerNotes;
       // border: 3px solid $accentColor;
+      .options {
+        padding-top: 5px;
+      }
+      li {
+        height: auto;
+        align-items: flex-start;
+      }
+      li p {
+        white-space: normal;
+        line-height: 35px;
+      }
     }
     li {
+      transition: all 0.1s linear;
       // border-bottom: 1px solid $noteAccent;
       background-color: transparent;
       height: 35px;
@@ -155,7 +167,9 @@
       // cursor: move;
 
       padding: 0 10px;
-      // width: 90%;
+      &:hover {
+        background-color: $backgroundColorTransparent;
+      }
       p {
         white-space: nowrap;
         overflow: hidden;
@@ -179,6 +193,15 @@
       text-transform: uppercase;
       font-size: 1rem;
     }
+    .css-bn921d-MuiButtonBase-root-MuiIconButton-root {
+      transition: all 0.1s linear;
+      &:hover {
+        transform: scale(1.2);
+        border-radius: 5px;
+        background-color: transparent;
+        color: $backgroundColor;
+      }
+    }
   }
 }
 .swal2-container.swal2-center > .swal2-popup {
@@ -188,7 +211,11 @@
     box-shadow: none;
   }
   .swal2-input:focus {
-   border: 3px solid #6f204d;
+    border: 3px solid #6f204d;
+    box-shadow: none;
+  }
+  .swal2-actions button:focus {
+    box-shadow: 0 0 0 2px $noteHeading;
   }
 }
 

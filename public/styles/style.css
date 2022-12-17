@@ -525,12 +525,12 @@ ul li {
   overflow: hidden;
 }
 .dailyPlannerMain .dailyContainer .listContainers ul {
-  overflow-y: scroll;
+  overflow-y: hidden;
   background-color: #FFF8EE;
   background-image: linear-gradient(#eee 0.1em, transparent 0.1em);
   background-size: 100% 35px;
   position: relative;
-  height: 100%;
+  height: calc(100% - 60px);
 }
 .dailyPlannerMain .dailyContainer .listContainertoDo ul {
   max-height: 630px;
@@ -547,7 +547,19 @@ ul li {
 .dailyPlannerMain .dailyContainer .listContainerNotes {
   grid-area: listContainerNotes;
 }
+.dailyPlannerMain .dailyContainer .listContainerNotes .options {
+  padding-top: 5px;
+}
+.dailyPlannerMain .dailyContainer .listContainerNotes li {
+  height: auto;
+  align-items: flex-start;
+}
+.dailyPlannerMain .dailyContainer .listContainerNotes li p {
+  white-space: normal;
+  line-height: 35px;
+}
 .dailyPlannerMain .dailyContainer li {
+  transition: all 0.1s linear;
   background-color: transparent;
   height: 35px;
   display: flex;
@@ -555,6 +567,9 @@ ul li {
   justify-content: space-between;
   width: 100%;
   padding: 0 10px;
+}
+.dailyPlannerMain .dailyContainer li:hover {
+  background-color: rgba(255, 183, 76, 0.3137254902);
 }
 .dailyPlannerMain .dailyContainer li p {
   white-space: nowrap;
@@ -578,6 +593,15 @@ ul li {
   text-transform: uppercase;
   font-size: 1rem;
 }
+.dailyPlannerMain .dailyContainer .css-bn921d-MuiButtonBase-root-MuiIconButton-root {
+  transition: all 0.1s linear;
+}
+.dailyPlannerMain .dailyContainer .css-bn921d-MuiButtonBase-root-MuiIconButton-root:hover {
+  transform: scale(1.2);
+  border-radius: 5px;
+  background-color: transparent;
+  color: #B38FFB;
+}
 
 .swal2-container.swal2-center > .swal2-popup {
   border: 3px solid #6f204d;
@@ -588,6 +612,10 @@ ul li {
 }
 .swal2-container.swal2-center > .swal2-popup .swal2-input:focus {
   border: 3px solid #6f204d;
+  box-shadow: none;
+}
+.swal2-container.swal2-center > .swal2-popup .swal2-actions button:focus {
+  box-shadow: 0 0 0 2px #FFB84C;
 }
 
 @keyframes fadeIn {
