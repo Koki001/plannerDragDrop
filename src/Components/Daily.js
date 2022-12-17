@@ -58,10 +58,12 @@ const theme = createTheme({
     MuiIconButton: {
       styleOverrides: {
         root: {
-          transform: "scale(1.2)",
-          borderRadius: "4px",
-          backgroundColor: "transparent",
-          color: "#B38FFB",
+          "&:hover": {
+            transform: "scale(1.2)",
+            borderRadius: "4px",
+            backgroundColor: "transparent",
+            color: "#B38FFB",
+          },
         },
       },
     },
