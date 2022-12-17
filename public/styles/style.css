@@ -282,7 +282,7 @@ body {
 
 #root {
   padding: 20px 0;
-  min-width: 600px;
+  min-width: 300px;
 }
 
 h1,
@@ -457,14 +457,15 @@ ul li {
   border-top-right-radius: 20px;
   padding: 7px 10px;
   text-transform: uppercase;
+  text-align: center;
   font-size: 0.8rem;
-  width: 200px;
+  width: 250px;
 }
 .dailyPlannerMain nav .navMenuContainer {
-  width: 200px;
+  width: 250px;
 }
 .dailyPlannerMain nav button {
-  width: 100px;
+  width: 80px;
 }
 .dailyPlannerMain .showAddMenufalse {
   display: none;
@@ -477,8 +478,6 @@ ul li {
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100vw;
-  height: 100vh;
   backdrop-filter: blur(10px);
   z-index: 10;
 }
@@ -666,32 +665,95 @@ ul li {
   .dailyPlannerMain nav {
     flex-direction: column;
     position: relative;
+    margin-bottom: 20px;
   }
   .dailyPlannerMain nav .navMenuContainer {
-    margin-top: 10px;
     order: 3;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 35px;
   }
   .dailyPlannerMain nav .navMenuContainer button {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    height: 100px;
-    width: 150px;
+    height: 70px;
+    width: 80px;
     border-radius: 20px;
     padding-left: 20px;
     padding-right: 20px;
     font-size: 1.1rem;
   }
-  .dailyPlannerMain nav .navMenuContainer a {
-    position: absolute;
-    top: 0;
-    left: 150px;
+  .dailyPlannerMain nav h2 {
+    font-size: 1.5rem;
   }
   .dailyPlannerMain nav .navDate {
     margin-top: 20px;
+    width: auto;
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 670px) {
+  .dailyPlannerMain .addChore {
+    width: 400px;
+  }
+  .dailyPlannerMain .addChore h2 {
+    text-align: center;
+  }
+  .dailyPlannerMain .radioCategories {
+    flex-direction: column;
+    align-items: center;
+  }
+  .dailyPlannerMain .radioCategories div {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+  }
+  .dailyPlannerMain .radioCategories label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 670px) {
+  .dailyPlannerMain .addChore {
+    width: 300px;
+  }
+  .dailyPlannerMain .addChore h2 {
+    text-align: center;
+  }
+  .dailyPlannerMain .radioCategories {
+    flex-direction: column;
+    align-items: center;
+  }
+  .dailyPlannerMain .radioCategories div {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+  }
+  .dailyPlannerMain .radioCategories label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 360px) {
+  .dailyPlannerMain nav .navMenuContainer button {
+    height: 70px;
+    width: 80px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 1.1rem;
+  }
+  .dailyPlannerMain nav h2 {
+    font-size: 1.5rem;
+  }
+  .dailyPlannerMain nav .navDate {
+    margin-top: 20px;
+    width: auto;
+    font-size: 0.5rem;
+    border: 2px solid #6F204D;
   }
 }
 .weeklyMain {

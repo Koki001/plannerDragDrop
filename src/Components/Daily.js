@@ -4,13 +4,17 @@ import Swal from "sweetalert2";
 import { v4 as uuid } from "uuid";
 import TextField from "@mui/material/TextField";
 import * as dayjs from "dayjs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app, auth } from "../firebase";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
@@ -51,8 +55,16 @@ const theme = createTheme({
         },
       },
     },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#B38FFB",
+          color: "#6F204D",
+          border: "2px solid #6F204D",
+        },
+      },
+    },
   },
-
   palette: {
     primary: {
       main: "#6F204D",
@@ -78,6 +90,7 @@ const Daily = function () {
   const [addMenu, setAddMenu] = useState(false);
   const [render, setRender] = useState(false);
   const database = getDatabase(app);
+  const navigate = useNavigate();
   const userRef = useSelector(function (state) {
     return state.user;
   });
@@ -326,6 +339,40 @@ const Daily = function () {
     // console.log("drag enter", e.target, index);
   };
   const handleSort = function () {};
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = function () {
+    setAnchorEl(null);
+  };
+  const handleGoBack = () => {
+    setAnchorEl(null);
+    navigate("/planner");
+  };
+  const handleLogout = function () {
+    setAnchorEl(null);
+    Swal.fire({
+      reverseButtons: true,
+      background: "#B38FFB",
+      confirmButtonColor: "#6F204D",
+      color: "#6F204D",
+      title: "Are you sure you want to log out?",
+      icon: "warning",
+      iconColor: "#FFB84C",
+      showCancelButton: true,
+      cancelButtonColor: "#6F204D",
+      confirmButtonText: "Log Out",
+      cancelButtonText: "Cancel",
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        signOut(auth);
+      } else {
+        setAnchorEl(null);
+      }
+    });
+  };
   if (firebaseLoaded === true) {
     return (
       <div className="dailyPlannerMain">
@@ -420,17 +467,62 @@ const Daily = function () {
         </div>
         <nav className="wrapperSlim">
           <div className="navMenuContainer">
-            <Link to={"/planner"}>
-              <ThemeProvider theme={theme}>
-                <Button>back</Button>
-              </ThemeProvider>
-            </Link>
             <ThemeProvider theme={theme}>
-              <Button onClick={handleDatabaseAdd}>ADD TASK</Button>
+              <IconButton
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClickMenu}
+                sx={{
+                  borderRadius: "20px",
+                  padding: "0",
+                }}
+              >
+                <MenuIcon
+                  sx={{
+                    color: "#6F204D",
+                    fontSize: "50px",
+                  }}
+                />
+              </IconButton>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleCloseMenu}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                {/* <Link to={"/planner"}> */}
+                <MenuItem id={"back"} onClick={handleGoBack}>
+                  Go Back
+                </MenuItem>
+                {/* </Link> */}
+                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </ThemeProvider>
+            <ThemeProvider theme={theme}>
+              <IconButton
+                sx={{
+                  borderRadius: "20px",
+                  padding: "0",
+                }}
+                onClick={handleDatabaseAdd}
+              >
+                <AddIcon
+                  sx={{
+                    color: "#6F204D",
+                    fontSize: "50px",
+                  }}
+                />
+              </IconButton>
             </ThemeProvider>
           </div>
           <h2>Daily Planner</h2>
-          <p className="navDate">date: {dayjs().format("dddd/MM/YYYY")}</p>
+          <p className="navDate">{dayjs().format("dddd/MM/YYYY")}</p>
         </nav>
         <div className="dailyContainer">
           <div className={`listContainers listContainerTopPriorities`}>
