@@ -1,9 +1,10 @@
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
-
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 const Planner = function () {
   // Material UI Theme
   const theme = createTheme({
@@ -22,7 +23,7 @@ const Planner = function () {
               backgroundColor: "#6F204D",
               color: "#B38FFB",
               border: "transparent",
-              borderRadius: "0"
+              borderRadius: "0",
             },
             padding: "0",
             fontSize: "1.5rem",
@@ -41,10 +42,14 @@ const Planner = function () {
       fontFamily: "Righteous",
     },
   });
-    const userInfo = useSelector(function (state) {
-      return state;
-    });
-    console.log(userInfo)
+  const navigate = useNavigate()
+  const userInfo = useSelector(function (state) {
+    return state;
+  });
+  const handleSignOut = function(){
+    signOut(auth)
+    navigate("/")
+  }
   return (
     <div className="plannerCategories">
       <ul>
@@ -61,11 +66,11 @@ const Planner = function () {
         <li>
           {" "}
           <Link to={"/weekly"}>
-          <ThemeProvider theme={theme}>
-            <Button style={{ width: "100%" }} variant="filled">
-              weekly
-            </Button>
-          </ThemeProvider>
+            <ThemeProvider theme={theme}>
+              <Button style={{ width: "100%" }} variant="filled">
+                weekly
+              </Button>
+            </ThemeProvider>
           </Link>
         </li>
         <li>
@@ -104,6 +109,16 @@ const Planner = function () {
           <ThemeProvider theme={theme}>
             <Button disabled style={{ width: "100%" }} variant="filled">
               blank notes
+            </Button>
+          </ThemeProvider>
+          {/* </Link> */}
+        </li>
+        <li className="signOutButton">
+          {" "}
+          {/* <Link to={"/blank-notes"}> */}
+          <ThemeProvider theme={theme}>
+            <Button onClick={handleSignOut} style={{ width: "100%" }} variant="outlined">
+              Sign Out
             </Button>
           </ThemeProvider>
           {/* </Link> */}

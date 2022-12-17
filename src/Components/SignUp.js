@@ -54,6 +54,9 @@ const SignUp = function () {
             email: user.user.email,
           }).then(function () {
             Swal.fire({
+              background: "#B38FFB",
+              confirmButtonColor: "#6F204D",
+              color: "#6F204D",
               icon: "success",
               title: "Account Created",
               text: `Welcome, ${user.user.displayName}`,
@@ -69,6 +72,9 @@ const SignUp = function () {
           Swal.fire({
             icon: "error",
             text: "Please fill out all the fields",
+            background: "#B38FFB",
+            confirmButtonColor: "#6F204D",
+            color: "#6F204D",
           }).then(function (res) {
             if (res.isConfirmed) {
               setFillField(true);
@@ -78,14 +84,35 @@ const SignUp = function () {
           Swal.fire({
             icon: "error",
             text: "The e-mail is already in use",
+            background: "#B38FFB",
+            confirmButtonColor: "#6F204D",
+            color: "#6F204D",
           });
-        }
-        console.log(error.code);
+        } else if (error.code === "auth/weak-password"){
+          Swal.fire({
+            icon: "error",
+            text: "Password must have a minimum of 6 characters",
+            background: "#B38FFB",
+            confirmButtonColor: "#6F204D",
+            color: "#6F204D",
+          });
+        } else if (error.code === "auth/invalid-email"){
+          Swal.fire({
+            icon: "error",
+            text: "Please enter a valid e-mail",
+            background: "#B38FFB",
+            confirmButtonColor: "#6F204D",
+            color: "#6F204D",
+          });
+        } console.log(error.code);
       }
     } else {
       Swal.fire({
         icon: "error",
         text: "Passwords do not match",
+        background: "#B38FFB",
+        confirmButtonColor: "#6F204D",
+        color: "#6F204D",
       });
     }
   };
@@ -109,6 +136,7 @@ const SignUp = function () {
   };
   return (
     <div className="signUpMain">
+      <h2>Create new account</h2>
       <ThemeProvider theme={theme}>
         <TextField
           onChange={handleNewUsername}

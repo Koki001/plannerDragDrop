@@ -282,6 +282,7 @@ body {
 
 #root {
   padding: 20px 0;
+  min-width: 600px;
 }
 
 h1,
@@ -391,10 +392,21 @@ ul li {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  justify-content: center;
+  height: 600px;
   width: 60%;
   max-width: 400px;
   min-width: 300px;
+}
+.signUpMain h2 {
+  margin-bottom: 30px;
+}
+.signUpMain a {
+  width: 100%;
+}
+.signUpMain button {
+  width: 100%;
+  margin-top: 10px;
 }
 
 .plannerCategories {
@@ -407,9 +419,20 @@ ul li {
 }
 .plannerCategories ul {
   width: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .plannerCategories li {
+  width: 100%;
   margin: 10px 0;
+}
+.plannerCategories li.signOutButton {
+  margin-top: 30px;
+  width: 250px;
+  border: 3px solid #6F204D;
+  border-radius: 10px;
 }
 
 .dailyPlannerMain {
@@ -523,6 +546,7 @@ ul li {
   border-radius: 20px;
   background-color: #FFF8EE;
   overflow: hidden;
+  min-height: 345px;
 }
 .dailyPlannerMain .dailyContainer .listContainers ul {
   overflow-y: hidden;
@@ -532,7 +556,10 @@ ul li {
   position: relative;
   height: calc(100% - 60px);
 }
-.dailyPlannerMain .dailyContainer .listContainertoDo ul {
+.dailyPlannerMain .dailyContainer .listContainerToDo {
+  min-height: 700px;
+}
+.dailyPlannerMain .dailyContainer .listContainerToDo ul {
   max-height: 630px;
 }
 .dailyPlannerMain .dailyContainer .listContainertopPriorities {
@@ -598,7 +625,7 @@ ul li {
 }
 .dailyPlannerMain .dailyContainer .css-bn921d-MuiButtonBase-root-MuiIconButton-root:hover {
   transform: scale(1.2);
-  border-radius: 5px;
+  border-radius: 4px;
   background-color: transparent;
   color: #B38FFB;
 }
@@ -624,6 +651,47 @@ ul li {
   }
   100% {
     opacity: 1;
+  }
+}
+@media (max-width: 940px) {
+  .dailyPlannerMain .dailyContainer {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .dailyPlannerMain .dailyContainer .listContainers {
+    height: 345px;
+  }
+  .dailyPlannerMain nav {
+    flex-direction: column;
+    position: relative;
+  }
+  .dailyPlannerMain nav .navMenuContainer {
+    margin-top: 10px;
+    order: 3;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .dailyPlannerMain nav .navMenuContainer button {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    height: 100px;
+    width: 150px;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 1.1rem;
+  }
+  .dailyPlannerMain nav .navMenuContainer a {
+    position: absolute;
+    top: 0;
+    left: 150px;
+  }
+  .dailyPlannerMain nav .navDate {
+    margin-top: 20px;
   }
 }
 .weeklyMain {

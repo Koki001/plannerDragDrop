@@ -112,6 +112,7 @@
       border-radius: 20px;
       background-color: $noteBackground;
       overflow: hidden;
+      min-height: 345px;
       ul {
         overflow-y: hidden;
         background-color: $noteBackground;
@@ -123,7 +124,8 @@
         // max-height: 280px;
       }
     }
-    .listContainertoDo {
+    .listContainerToDo {
+      min-height: 700px;
       ul {
         max-height: 630px;
       }
@@ -197,7 +199,7 @@
       transition: all 0.1s linear;
       &:hover {
         transform: scale(1.2);
-        border-radius: 5px;
+        border-radius: 4px;
         background-color: transparent;
         color: $backgroundColor;
       }
@@ -225,5 +227,49 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@media (max-width: 940px) {
+  .dailyPlannerMain {
+    .dailyContainer {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .listContainers {
+        height: 345px;
+      }
+    }
+    nav {
+      flex-direction: column;
+      position: relative;
+      .navMenuContainer {
+        margin-top: 10px;
+        order: 3;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        button {
+          position: absolute;
+          top: 50px;
+          right: 0;
+          height: 100px;
+          width: 150px;
+          border-radius: 20px;
+          padding-left: 20px;
+          padding-right: 20px;
+          font-size: 1.1rem;
+        }
+        a {
+          position: absolute;
+          top: 0;
+          left: 150px;
+        }
+      }
+      .navDate {
+        margin-top: 20px;
+      }
+    }
   }
 }
