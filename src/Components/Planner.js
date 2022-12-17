@@ -83,7 +83,7 @@ const Planner = function () {
           {" "}
           <Link to={"/weekly"}>
             <ThemeProvider theme={theme}>
-              <Button style={{ width: "100%" }} variant="filled">
+              <Button disabled style={{ width: "100%" }} variant="filled">
                 weekly
               </Button>
             </ThemeProvider>
@@ -111,13 +111,13 @@ const Planner = function () {
         </li>
         <li>
           {" "}
-          {/* <Link to={"/celendar"}> */}
+          <Link to={"/calendar"}>
           <ThemeProvider theme={theme}>
-            <Button disabled style={{ width: "100%" }} variant="filled">
+            <Button style={{ width: "100%" }} variant="filled">
               calendar
             </Button>
           </ThemeProvider>
-          {/* </Link> */}
+          </Link>
         </li>
         <li>
           {" "}

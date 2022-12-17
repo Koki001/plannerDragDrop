@@ -3,6 +3,7 @@ import SignUp from "./Components/SignUp";
 import Planner from "./Components/Planner";
 import Daily from "./Components/Daily";
 import Weekly from "./Components/Weekly";
+import CalendarPage from "./Components/Calendar";
 // other imports
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -42,6 +43,7 @@ function App() {
         <Route path="/planner" element={<Planner />} />
         <Route path="/daily" element={<Daily />} />
         <Route path="/weekly" element={<Weekly />} />
+        <Route path="/calendar" element={<CalendarPage />} />
       </Routes>
     </div>
   );
