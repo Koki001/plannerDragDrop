@@ -17,11 +17,14 @@ const Planner = function () {
         styleOverrides: {
           root: {
             color: "#6F204D",
-            border: "2px solid transparent",
+            border: "transparent",
             "&:hover": {
-              backgroundColor: "transparent",
-              border: "2px solid #6F204D",
+              backgroundColor: "#6F204D",
+              color: "#B38FFB",
+              border: "transparent",
+              borderRadius: "0"
             },
+            padding: "0",
             fontSize: "1.5rem",
           },
         },

@@ -54,11 +54,11 @@ const WelcomePage = function () {
         logInEmail,
         logInPassword
       ).then(function (userCredential) {
-        console.log(userCredential);
-        dispatch(USER_LOGGED_IN(true))
-        dispatch(USER_ID(userCredential.user.uid))
-        dispatch(USER_NAME(userCredential.user.displayName))
-        dispatch(USER_EMAIL(userCredential.user.email))
+        // console.log(userCredential);
+        // dispatch(USER_LOGGED_IN(true))
+        // dispatch(USER_ID(userCredential.user.uid))
+        // dispatch(USER_NAME(userCredential.user.displayName))
+        // dispatch(USER_EMAIL(userCredential.user.email))
         navigate("/planner");
       });
     } catch (error) {

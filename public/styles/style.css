@@ -310,6 +310,21 @@ ul li {
   list-style: none;
 }
 
+#loadingDiv {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #B38FFB;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  height: 100vh;
+  width: 100vw;
+}
+
 .App {
   font-family: "Righteous", sans-serif;
   color: #6F204D;
@@ -331,6 +346,7 @@ ul li {
   flex-direction: column;
   align-items: center;
   height: 100%;
+  height: 600px;
   width: 100%;
   padding: 50px 20px;
 }
@@ -381,6 +397,21 @@ ul li {
   min-width: 300px;
 }
 
+.plannerCategories {
+  width: 100%;
+  height: 600px;
+  padding: 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plannerCategories ul {
+  width: 100%;
+}
+.plannerCategories li {
+  margin: 10px 0;
+}
+
 .dailyPlannerMain {
   position: relative;
   width: 100%;
@@ -404,6 +435,10 @@ ul li {
   padding: 7px 10px;
   text-transform: uppercase;
   font-size: 0.8rem;
+  width: 200px;
+}
+.dailyPlannerMain nav .navMenuContainer {
+  width: 200px;
 }
 .dailyPlannerMain nav button {
   width: 100px;
@@ -492,8 +527,10 @@ ul li {
 .dailyPlannerMain .dailyContainer .listContainers ul {
   overflow-y: scroll;
   background-color: #FFF8EE;
+  background-image: linear-gradient(#eee 0.1em, transparent 0.1em);
+  background-size: 100% 35px;
   position: relative;
-  max-height: 280px;
+  height: 100%;
 }
 .dailyPlannerMain .dailyContainer .listContainertoDo ul {
   max-height: 630px;
@@ -511,14 +548,12 @@ ul li {
   grid-area: listContainerNotes;
 }
 .dailyPlannerMain .dailyContainer li {
-  border-bottom: 1px solid #E3E3E3;
-  background-color: #FFF8EE;
+  background-color: transparent;
   height: 35px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  cursor: move;
   padding: 0 10px;
 }
 .dailyPlannerMain .dailyContainer li p {
@@ -542,6 +577,17 @@ ul li {
   background-color: #FFB84C;
   text-transform: uppercase;
   font-size: 1rem;
+}
+
+.swal2-container.swal2-center > .swal2-popup {
+  border: 3px solid #6f204d;
+}
+.swal2-container.swal2-center > .swal2-popup .swal2-input {
+  border: 1px solid #6f204d;
+  box-shadow: none;
+}
+.swal2-container.swal2-center > .swal2-popup .swal2-input:focus {
+  border: 3px solid #6f204d;
 }
 
 @keyframes fadeIn {

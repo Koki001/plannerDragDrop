@@ -20,6 +20,7 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
+  height: 600px;
   width: 100%;
   padding: 50px 20px;
 }
@@ -64,5 +65,19 @@
   width: 60%;
   max-width: 400px;
   min-width: 300px;
+}
+.plannerCategories {
+  width: 100%;
+  height: 600px;
+  padding: 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ul {
+    width: 100%;
+  }
+  li {
+    margin: 10px 0;
+  }
 }
 

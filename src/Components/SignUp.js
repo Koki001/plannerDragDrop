@@ -13,7 +13,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { getDatabase, ref, set, push } from "firebase/database";
-import { auth, app } from "../firebase";
+import { auth } from "../firebase";
 import { useState } from "react";
 
 const SignUp = function () {
@@ -28,7 +28,7 @@ const SignUp = function () {
     },
   });
   const navigate = useNavigate();
-  const authenticate = getAuth();
+  // const authenticate = getAuth();
   const [newUser, setNewUser] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPass, setNewPass] = useState("");
@@ -45,7 +45,7 @@ const SignUp = function () {
           newEmail,
           newPass
         );
-        updateProfile(authenticate.currentUser, {
+        updateProfile(auth.currentUser, {
           displayName: newUser,
         }).then(function () {
           const db = getDatabase();
