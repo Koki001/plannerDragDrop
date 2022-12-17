@@ -74,7 +74,8 @@
   }
   button {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 30px;
   }
 }
 .plannerCategories {
@@ -100,5 +101,26 @@
     width: 250px;
     border: 3px solid $accentColor;
     border-radius: 10px;
+  }
+}
+@media (max-width: 670px) {
+  .welcomeMain {
+    height: 650px;
+  }
+}
+@media (max-width: 360px) {
+  .welcomeMain {
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1rem;
+    }
+  }
+  .loginMain {
+    min-width: 250px;
+  }
+  .signUpMain {
+    min-width: 250px;
   }
 }

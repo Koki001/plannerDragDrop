@@ -58,6 +58,7 @@ const SignUp = function () {
               confirmButtonColor: "#6F204D",
               color: "#6F204D",
               icon: "success",
+              iconColor: "#6F204D",
               title: "Account Created",
               text: `Welcome, ${user.user.displayName}`,
             }).then(function (res) {
@@ -70,8 +71,9 @@ const SignUp = function () {
       } catch (error) {
         if (newUser === "" || newEmail === "" || newPass === "") {
           Swal.fire({
-            icon: "error",
-            text: "Please fill out all the fields",
+            icon: "warning",
+            iconColor: "#FFB84C",
+            text: "Please fill out all of the fields",
             background: "#B38FFB",
             confirmButtonColor: "#6F204D",
             color: "#6F204D",
@@ -82,7 +84,8 @@ const SignUp = function () {
           });
         } else if (error.code === "auth/email-already-in-use") {
           Swal.fire({
-            icon: "error",
+            icon: "warning",
+            iconColor: "#FFB84C",
             text: "The e-mail is already in use",
             background: "#B38FFB",
             confirmButtonColor: "#6F204D",
@@ -90,7 +93,8 @@ const SignUp = function () {
           });
         } else if (error.code === "auth/weak-password"){
           Swal.fire({
-            icon: "error",
+            icon: "warning",
+            iconColor: "#FFB84C",
             text: "Password must have a minimum of 6 characters",
             background: "#B38FFB",
             confirmButtonColor: "#6F204D",
@@ -98,7 +102,8 @@ const SignUp = function () {
           });
         } else if (error.code === "auth/invalid-email"){
           Swal.fire({
-            icon: "error",
+            icon: "warning",
+            iconColor: "#FFB84C",
             text: "Please enter a valid e-mail",
             background: "#B38FFB",
             confirmButtonColor: "#6F204D",
@@ -108,7 +113,8 @@ const SignUp = function () {
       }
     } else {
       Swal.fire({
-        icon: "error",
+        icon: "warning",
+        iconColor: "#FFB84C",
         text: "Passwords do not match",
         background: "#B38FFB",
         confirmButtonColor: "#6F204D",
@@ -142,7 +148,7 @@ const SignUp = function () {
           onChange={handleNewUsername}
           style={{ width: "100%", border: "2px solid #6F204D" }}
           id="username-input"
-          label="Username"
+          label="Username / Display name"
           type="text"
           variant="filled"
         />
@@ -150,7 +156,7 @@ const SignUp = function () {
           onChange={handleNewEmail}
           style={{ width: "100%", border: "2px solid #6F204D" }}
           id="email-input"
-          label="Email"
+          label="E-mail"
           type="email"
           variant="filled"
         />

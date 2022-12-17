@@ -59,27 +59,60 @@ const WelcomePage = function () {
         // dispatch(USER_ID(userCredential.user.uid))
         // dispatch(USER_NAME(userCredential.user.displayName))
         // dispatch(USER_EMAIL(userCredential.user.email))
-        navigate("/planner");
+        Swal.fire({
+          timer: 1500,
+          background: "#B38FFB",
+          showConfirmButton: false,
+          color: "#6F204D",
+          icon: "success",
+          iconColor: "#6F204D",
+          title: `Welcome back, ${auth.currentUser.displayName}`,
+        }).then(function (res) {
+          if (res.dismiss === Swal.DismissReason.timer) {
+            navigate("/planner");
+          }
+        });
+        // navigate("/planner");
       });
     } catch (error) {
       if (logInEmail === "" || logInPassword === "") {
         Swal.fire({
-          icon: "error",
+          background: "#B38FFB",
+          confirmButtonColor: "#6F204D",
+          color: "#6F204D",
+          icon: "warning",
+          iconColor: "#FFB84C",
+          confirmButtonText: "Ok",
           text: "Please fill out your e-mail and password",
         });
       } else if (error.message === "Firebase: Error (auth/user-not-found).") {
         Swal.fire({
-          icon: "error",
-          text: "User not found",
+          background: "#B38FFB",
+          confirmButtonColor: "#6F204D",
+          color: "#6F204D",
+          icon: "warning",
+          iconColor: "#FFB84C",
+          confirmButtonText: "Ok",
+          text: "The password and e-mail do not match",
         });
       } else if (error.message === "Firebase: Error (auth/wrong-password).") {
         Swal.fire({
-          icon: "error",
+          background: "#B38FFB",
+          confirmButtonColor: "#6F204D",
+          color: "#6F204D",
+          icon: "warning",
+          iconColor: "#FFB84C",
+          confirmButtonText: "Ok",
           text: "Wrong password",
         });
       } else if (error.message === "Firebase: Error (auth/invalid-email).") {
         Swal.fire({
-          icon: "error",
+          background: "#B38FFB",
+          confirmButtonColor: "#6F204D",
+          color: "#6F204D",
+          icon: "warning",
+          iconColor: "#FFB84C",
+          confirmButtonText: "Ok",
           text: "The e-mail entered is invalid",
         });
       }

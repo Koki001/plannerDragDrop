@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
+import Swal from "sweetalert2";
 const Planner = function () {
   // Material UI Theme
   const theme = createTheme({
@@ -47,8 +48,23 @@ const Planner = function () {
     return state;
   });
   const handleSignOut = function(){
-    signOut(auth)
-    navigate("/")
+    Swal.fire({
+      reverseButtons: true,
+      background: "#B38FFB",
+      confirmButtonColor: "#6F204D",
+      color: "#6F204D",
+      title: "Are you sure you want to sign out?",
+      icon: "warning",
+      iconColor: "#FFB84C",
+      showCancelButton: true,
+      cancelButtonColor: "#6F204D",
+      confirmButtonText: "Sign Out",
+      cancelButtonText: "Cancel",
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        signOut(auth);
+      }
+    });
   }
   return (
     <div className="plannerCategories">
