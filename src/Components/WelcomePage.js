@@ -66,7 +66,7 @@ const WelcomePage = function () {
           color: "#6F204D",
           icon: "success",
           iconColor: "#6F204D",
-          title: `Welcome back, ${auth.currentUser.displayName}`,
+          title: `Welcome back, <span class="userWelcomeText">${auth.currentUser.displayName}</span>`,
         }).then(function (res) {
           if (res.dismiss === Swal.DismissReason.timer) {
             navigate("/planner");

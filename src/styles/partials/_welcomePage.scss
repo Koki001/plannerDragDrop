@@ -24,6 +24,10 @@
   width: 100%;
   padding: 50px 20px;
 }
+.userWelcomeText {
+  color: $noteHeading;
+  text-shadow: 0 0 2px $accentColor, 0 0 2px $accentColor, 0 0 2px $accentColor, 0 0 2px $accentColor;
+}
 .loginMain {
   display: flex;
   flex-direction: column;

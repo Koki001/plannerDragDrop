@@ -178,6 +178,11 @@
         width: 80%;
         pointer-events: none;
       }
+      &.isDragging {
+        background-color: #b38ffb41;
+        opacity: 1;
+        color: #FFB84C;
+      }
     }
     li:active,
     li:focus {

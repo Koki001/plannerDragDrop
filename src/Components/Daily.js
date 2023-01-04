@@ -101,11 +101,105 @@ const Daily = function () {
   const [category, setCategory] = useState("");
   const [addMenu, setAddMenu] = useState(false);
   const [render, setRender] = useState(false);
+  const [sortTrigger, setSortTrigger] = useState(false);
+  // const [mouseY, setMouseY] = useState(null)
   const database = getDatabase(app);
   const navigate = useNavigate();
   const userRef = useSelector(function (state) {
     return state.user;
   });
+
+  let curTask = useRef(null);
+  let curTaskHover = useRef(null);
+  let curParentHover = useRef(null);
+  let curParent = useRef(null);
+  let initialParent = useRef(null);
+  const draggingItem = useRef();
+  const dragOverItem = useRef();
+  const prioritiesRef = useRef(null);
+  const handleDragStart = function (e, position) {
+    e.currentTarget.classList.add("isDragging");
+    draggingItem.current = position;
+    curTask = e.currentTarget;
+    initialParent = e.currentTarget;
+    // console.log(initialParent, "TESTING")
+  };
+  const handleDragEnd = function (result) {
+    result.target.classList.remove("isDragging");
+    // if (!result.destination) return
+    // const {source, destination} = result
+    let categorySource = result.target.attributes.value.value;
+    let categoryDest = curParent.title;
+
+    console.log(categoryDest, categorySource);
+    // const dataCopy = [...firebaseData[categoryDest]];
+    const copySource = [...firebaseData[categorySource]];
+    const copyDest = [...firebaseData[categoryDest]];
+    const draggingItemContent = copySource[draggingItem.current];
+    if (categorySource === categoryDest) {
+      copySource.splice(draggingItem.current, 1);
+      copySource.splice(dragOverItem.current, 0, draggingItemContent);
+      draggingItem.current = null;
+      dragOverItem.current = null;
+      setFirebaseData(function (current) {
+        return { ...current, [categorySource]: copySource };
+      });
+      update(ref(database, `${auth.currentUser.uid}/daily`), {
+        [categorySource]: copySource,
+      });
+      console.log("end drag", firebaseData);
+      curTask = null;
+      curParent = null;
+    } else {
+      copySource.splice(draggingItem.current, 1);
+      copyDest.splice(dragOverItem.current, 0, draggingItemContent);
+      draggingItem.current = null;
+      dragOverItem.current = null;
+      setFirebaseData(function (current) {
+        return { ...current, [categoryDest]: copyDest, [categorySource]: copySource };
+      });
+      update(ref(database, `${auth.currentUser.uid}/daily`), {
+        [categoryDest]: copyDest,
+        [categorySource]: copySource,
+      });
+      console.log("end drag", firebaseData);
+      curTask = null;
+      curParent = null;
+    }
+  };
+  const handleDragOverParent = function (e) {
+    e.preventDefault();
+    curParentHover = e.currentTarget;
+    // console.log(e.currentTarget.lastChild.id);
+  };
+  const handleDragOverItem = function (item, position) {
+    curTaskHover = item.currentTarget;
+    dragOverItem.current = position;
+  };
+  const handleDragOverZone = function (zone) {
+    zone.preventDefault();
+    // console.log(zone.currentTarget)
+    curParent = zone.currentTarget;
+
+    // if (dragOverItem.current > draggingItem.current) {
+    //   // curTaskHover.before(curTask);
+    //   curTaskHover.style.marginBottom = "5px";
+
+    // } else if (dragOverItem.current < draggingItem.current) {
+    //   // curTaskHover.after(curTask);
+    //   curTaskHover.style.marginTop = "5px";
+
+    // }
+    // curParent.childNodes.forEach(function (item) {
+    //   if (item !== curTaskHover) {
+    //     item.style.margin = "0";
+    //   }
+    // });
+    // // if (curParent.childNodes.length === 0) {
+    // //   curParent.appendChild(curTask);
+    // // }
+  };
+
   useEffect(
     function () {
       onAuthStateChanged(auth, (user) => {
@@ -129,7 +223,7 @@ const Daily = function () {
               for (let item in dataP) {
                 newStatePriorities.push({
                   description: dataP[item].description,
-                  createdAt: dataP[item].createdAt,
+                  created: dataP[item].created,
                   completed: dataP[item].completed,
                   id: item,
                   parent: "priorities",
@@ -138,7 +232,7 @@ const Daily = function () {
               for (let item in dataR) {
                 newStateReminders.push({
                   description: dataR[item].description,
-                  createdAt: dataR[item].createdAt,
+                  created: dataR[item].created,
                   completed: dataR[item].completed,
                   id: item,
                   parent: "reminders",
@@ -147,7 +241,7 @@ const Daily = function () {
               for (let item in dataT) {
                 newStateToDo.push({
                   description: dataT[item].description,
-                  createdAt: dataT[item].createdAt,
+                  created: dataT[item].created,
                   completed: dataT[item].completed,
                   id: item,
                   parent: "toDo",
@@ -156,7 +250,7 @@ const Daily = function () {
               for (let item in dataN) {
                 newStateNotes.push({
                   description: dataN[item].description,
-                  createdAt: dataN[item].createdAt,
+                  created: dataN[item].created,
                   completed: dataN[item].completed,
                   id: item,
                   parent: "notes",
@@ -344,13 +438,6 @@ const Daily = function () {
       handleAddText();
     }
   };
-  const onDrag = function (e, index) {
-    // console.log("start", e.target, index);
-  };
-  const onDragEnter = function (e, index) {
-    // console.log("drag enter", e.target, index);
-  };
-  const handleSort = function () {};
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClickMenu = (event) => {
@@ -536,20 +623,30 @@ const Daily = function () {
           <h2>Daily Planner</h2>
           <p className="navDate">{dayjs().format("dddd/MM/YYYY")}</p>
         </nav>
-        <div className="dailyContainer">
-          <div className={`listContainers listContainerTopPriorities`}>
+        <div onDragEnd={handleDragEnd} className="dailyContainer">
+          <div
+            onDragOver={handleDragOverZone}
+            className={`listContainers listContainerTopPriorities`}
+            title={"priorities"}
+          >
             <h3>top priorities</h3>
-            <ul>
+            <ul
+              id="priorities"
+              ref={prioritiesRef}
+              onDragEnter={handleDragOverParent}
+              // onDragOver={handleDragOverZone}
+            >
               {firebaseData.priorities?.map(function (item, index) {
                 return (
                   <li
+                    className={"task"}
                     draggable
-                    onDrag={onDrag}
-                    onDragEnter={onDragEnter}
-                    onDragEnd={handleSort}
-                    onDragOver={(e) => e.preventDefault()}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragEnter={(e) => handleDragOverItem(e, index)}
+                    // onDragEnd={handleDragEnd}
                     key={uuid()}
                     id={item.id}
+                    value={item.parent}
                   >
                     <p>{item.description}</p>
                     <div className="options">
@@ -585,19 +682,28 @@ const Daily = function () {
               })}
             </ul>
           </div>
-          <div className={`listContainers listContainerReminders`}>
+          <div
+            onDragOver={handleDragOverZone}
+            className={`listContainers listContainerReminders`}
+            title={"reminders"}
+          >
             <h3>reminders</h3>
-            <ul>
+            <ul
+              id="reminders"
+              onDragEnter={handleDragOverParent}
+              // onDragOver={handleDragOverZone}
+            >
               {firebaseData.reminders?.map(function (item, index) {
                 return (
                   <li
+                    className={"task"}
                     draggable
-                    onDrag={onDrag}
-                    onDragEnter={onDragEnter}
-                    onDragEnd={handleSort}
-                    onDragOver={(e) => e.preventDefault()}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragEnter={(e) => handleDragOverItem(e, index)}
+                    // onDragEnd={handleDragEnd}
                     key={uuid()}
                     id={item.id}
+                    value={item.parent}
                   >
                     <p>{item.description}</p>
                     <div className="options">
@@ -633,19 +739,28 @@ const Daily = function () {
               })}
             </ul>
           </div>
-          <div className={`listContainers listContainerToDo`}>
+          <div
+            onDragOver={handleDragOverZone}
+            className={`listContainers listContainerToDo`}
+            title={"toDo"}
+          >
             <h3>to do</h3>
-            <ul>
+            <ul
+              id="toDo"
+              onDragEnter={handleDragOverParent}
+              // onDragOver={handleDragOverZone}
+            >
               {firebaseData.toDo?.map(function (item, index) {
                 return (
                   <li
+                    className={"task"}
                     draggable
-                    onDrag={onDrag}
-                    onDragEnter={onDragEnter}
-                    onDragEnd={handleSort}
-                    onDragOver={(e) => e.preventDefault()}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragEnter={(e) => handleDragOverItem(e, index)}
+                    // onDragEnd={handleDragEnd}
                     key={uuid()}
                     id={item.id}
+                    value={item.parent}
                   >
                     <p>{item.description}</p>
                     <div className="options">
@@ -681,19 +796,28 @@ const Daily = function () {
               })}
             </ul>
           </div>
-          <div className={`listContainers listContainerNotes`}>
+          <div
+            onDragOver={handleDragOverZone}
+            className={`listContainers listContainerNotes`}
+            title={"notes"}
+          >
             <h3>notes</h3>
-            <ul>
+            <ul
+              id="notes"
+              onDragEnter={handleDragOverParent}
+              // onDragOver={handleDragOverZone}
+            >
               {firebaseData.notes?.map(function (item, index) {
                 return (
                   <li
+                    className={"task"}
                     draggable
-                    onDrag={onDrag}
-                    onDragEnter={onDragEnter}
-                    onDragEnd={handleSort}
-                    onDragOver={(e) => e.preventDefault()}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragEnter={(e) => handleDragOverItem(e, index)}
+                    // onDragEnd={handleDragEnd}
                     key={uuid()}
                     id={item.id}
+                    value={item.parent}
                   >
                     <p>{item.description}</p>
                     <div className="options">

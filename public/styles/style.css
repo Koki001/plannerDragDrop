@@ -352,6 +352,11 @@ ul li {
   padding: 50px 20px;
 }
 
+.userWelcomeText {
+  color: #FFB84C;
+  text-shadow: 0 0 2px #6F204D, 0 0 2px #6F204D, 0 0 2px #6F204D, 0 0 2px #6F204D;
+}
+
 .loginMain {
   display: flex;
   flex-direction: column;
@@ -623,6 +628,11 @@ ul li {
   text-overflow: ellipsis;
   width: 80%;
   pointer-events: none;
+}
+.dailyPlannerMain .dailyContainer li.isDragging {
+  background-color: rgba(179, 143, 251, 0.2549019608);
+  opacity: 1;
+  color: #FFB84C;
 }
 .dailyPlannerMain .dailyContainer li:active,
 .dailyPlannerMain .dailyContainer li:focus {
