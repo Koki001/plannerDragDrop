@@ -180,10 +180,15 @@
       }
       &.isDragging {
         background-color: #b38ffb41;
-        opacity: 1;
-        color: #FFB84C;
+        // opacity: 1;
+        color: #ffb84c;
+      }
+      &.shiftElement {
+        // transition: all 0.2s linear;
+        // border-top: 2px solid $accentColor;
       }
     }
+
     li:active,
     li:focus {
       width: "411.33px";

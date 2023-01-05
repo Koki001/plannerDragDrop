@@ -631,8 +631,7 @@ ul li {
 }
 .dailyPlannerMain .dailyContainer li.isDragging {
   background-color: rgba(179, 143, 251, 0.2549019608);
-  opacity: 1;
-  color: #FFB84C;
+  color: #ffb84c;
 }
 .dailyPlannerMain .dailyContainer li:active,
 .dailyPlannerMain .dailyContainer li:focus {
