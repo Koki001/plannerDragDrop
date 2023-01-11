@@ -111,13 +111,13 @@ const Planner = function () {
         </li>
         <li>
           {" "}
-          <Link to={"/calendar"}>
+          {/* <Link to={"/calendar"}> */}
           <ThemeProvider theme={theme}>
-            <Button style={{ width: "100%" }} variant="filled">
+            <Button disabled style={{ width: "100%" }} variant="filled">
               calendar
             </Button>
           </ThemeProvider>
-          </Link>
+          {/* </Link> */}
         </li>
         <li>
           {" "}
