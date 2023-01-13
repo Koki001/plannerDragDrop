@@ -593,7 +593,7 @@ const Daily = function () {
                   Go Back
                 </MenuItem>
                 {/* </Link> */}
-                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+                <MenuItem disabled onClick={handleCloseMenu}>My account</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </ThemeProvider>

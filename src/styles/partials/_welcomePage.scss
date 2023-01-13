@@ -26,7 +26,8 @@
 }
 .userWelcomeText {
   color: $noteHeading;
-  text-shadow: 0 0 2px $accentColor, 0 0 2px $accentColor, 0 0 2px $accentColor, 0 0 2px $accentColor;
+  text-shadow: 0 0 2px $accentColor, 0 0 2px $accentColor, 0 0 2px $accentColor,
+    0 0 2px $accentColor;
 }
 .loginMain {
   display: flex;
@@ -106,6 +107,7 @@
     border: 3px solid $accentColor;
     border-radius: 10px;
   }
+
 }
 @media (max-width: 670px) {
   .welcomeMain {

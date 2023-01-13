@@ -621,6 +621,7 @@ ul li {
 }
 .dailyPlannerMain .dailyContainer li:hover {
   background-color: rgba(255, 183, 76, 0.3137254902);
+  cursor: grab;
 }
 .dailyPlannerMain .dailyContainer li p {
   white-space: nowrap;

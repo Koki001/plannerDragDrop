@@ -6,7 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import ConstructionIcon from "@mui/icons-material/Construction";
 const Planner = function () {
+  const [headings, setHeadings] = useState([
+    "daily",
+    "weekly",
+    "monthly",
+    "yearly",
+    "calendar",
+    "blank notes",
+  ]);
+  const [headingCS, setHeadingCS] = useState("");
   // Material UI Theme
   const theme = createTheme({
     components: {
@@ -43,11 +54,11 @@ const Planner = function () {
       fontFamily: "Righteous",
     },
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const userInfo = useSelector(function (state) {
     return state;
   });
-  const handleSignOut = function(){
+  const handleSignOut = function () {
     Swal.fire({
       reverseButtons: true,
       background: "#B38FFB",
@@ -65,11 +76,21 @@ const Planner = function () {
         signOut(auth);
       }
     });
-  }
+  };
+  const handleHover = function (e) {
+    setHeadingCS("coming soon");
+    e.target.firstElementChild.innerText = "COMING SOON";
+    e.target.style.backgroundColor = "#ffb74c50";
+  };
+  const handleExitHover = function (e) {
+    e.target.firstElementChild.innerText = headings[e.target.value];
+    console.log(e.target);
+    e.target.style.backgroundColor = "transparent";
+  };
   return (
     <div className="plannerCategories">
       <ul>
-        <li>
+        <li value={0}>
           {" "}
           <Link to={"/daily"}>
             <ThemeProvider theme={theme}>
@@ -79,17 +100,17 @@ const Planner = function () {
             </ThemeProvider>
           </Link>
         </li>
-        <li>
+        <li value={1} onMouseOver={handleHover} onMouseLeave={handleExitHover}>
           {" "}
-          <Link to={"/weekly"}>
-            <ThemeProvider theme={theme}>
-              <Button disabled style={{ width: "100%" }} variant="filled">
-                weekly
-              </Button>
-            </ThemeProvider>
-          </Link>
+          {/* <Link to={"/weekly"}> */}
+          <ThemeProvider theme={theme}>
+            <Button disabled style={{ width: "100%" }} variant="filled">
+              weekly
+            </Button>
+          </ThemeProvider>
+          {/* </Link> */}
         </li>
-        <li>
+        <li value={2} onMouseOver={handleHover} onMouseLeave={handleExitHover}>
           {" "}
           {/* <Link to={"/monthly"}> */}
           <ThemeProvider theme={theme}>
@@ -99,7 +120,7 @@ const Planner = function () {
           </ThemeProvider>
           {/* </Link> */}
         </li>
-        <li>
+        <li value={3} onMouseOver={handleHover} onMouseLeave={handleExitHover}>
           {" "}
           {/* <Link to={"/yearly"}> */}
           <ThemeProvider theme={theme}>
@@ -109,7 +130,7 @@ const Planner = function () {
           </ThemeProvider>
           {/* </Link> */}
         </li>
-        <li>
+        <li value={4} onMouseOver={handleHover} onMouseLeave={handleExitHover}>
           {" "}
           {/* <Link to={"/calendar"}> */}
           <ThemeProvider theme={theme}>
@@ -119,7 +140,7 @@ const Planner = function () {
           </ThemeProvider>
           {/* </Link> */}
         </li>
-        <li>
+        <li value={5} onMouseOver={handleHover} onMouseLeave={handleExitHover}>
           {" "}
           {/* <Link to={"/blank-notes"}> */}
           <ThemeProvider theme={theme}>
@@ -133,7 +154,11 @@ const Planner = function () {
           {" "}
           {/* <Link to={"/blank-notes"}> */}
           <ThemeProvider theme={theme}>
-            <Button onClick={handleSignOut} style={{ width: "100%" }} variant="outlined">
+            <Button
+              onClick={handleSignOut}
+              style={{ width: "100%" }}
+              variant="outlined"
+            >
               Sign Out
             </Button>
           </ThemeProvider>

@@ -170,6 +170,7 @@
       padding: 0 10px;
       &:hover {
         background-color: $backgroundColorTransparent;
+        cursor: grab;
       }
       p {
         white-space: nowrap;
